@@ -3,7 +3,7 @@ midi-grid
 
 Two way mapping of a midi stream to coordinate grid with stackable states.
 
-## Install via [npm](https://npmjs.org/packages/midi-grid)
+## Install via [npm](https://npmjs.org/package/midi-grid)
 
 ```js
 $ npm install midi-grid
