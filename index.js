@@ -13,7 +13,9 @@ module.exports = function MidiGrid(midiStream, mapping, outputGrid){
 
   // remap exported set to output
   var set = self.set
-  self.set = self.output.set.bind(self.output)
+  if (typeof self.output.set === 'function'){
+    self.set = self.output.set.bind(self.output)
+  }
 
   self.midiStream = Through(function(data){
     var key = data[0] + '/' + data[1]
