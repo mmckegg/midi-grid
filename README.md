@@ -17,7 +17,7 @@ $ npm install midi-grid
 var MidiGrid = require('midi-grid')
 ```
 
-### var midiGrid = MidiGrid(duplexMidiStream, mapping[, outputGrid])
+### `var midiGrid = MidiGrid(duplexMidiStream, mapping[, outputGrid])`
 
 Create an [observable](https://github.com/mmckegg/observ-grid) instance of MidiGrid. 
 
@@ -72,16 +72,16 @@ Get the current input value of the given coordinates.
 
 Alias for `output.set(row, col, value)`. Sets the output value at the given coordinates.
 
-### midiGrid.midiStream (Duplex Stream)
+### `midiGrid.midiStream (Duplex Stream)`
 
 This midi stream is connected to the constructor `duplexPort` if specified, otherwise it can be manually piped to and from a midi device.
 
 ## [Observable Attributes](https://github.com/raynos/observ)
 
-### midiGrid
+### `midiGrid`
 
 Notifies when any input value changes (e.g. a button is pressed/released). 
 
-### midiGrid.output ([ObservGrid](https://github.com/mmckegg/observ-grid) or custom observ passed to ctor)
+### `midiGrid.output` ([ObservGrid](https://github.com/mmckegg/observ-grid) or custom observ passed to ctor)
 
 Notifies when any output value changes (e.g. light up button). Set output values using `midiGrid.output.set(row, col, val)` or use the alias `midiGrid.set`.
