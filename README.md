@@ -72,6 +72,10 @@ Get the current input value of the given coordinates.
 
 Alias for `output.set(row, col, value)`. Sets the output value at the given coordinates.
 
+### `midiGrid.resend()`
+
+Resend all the current output values. Use if you switch the output device and want to resend all state.
+
 ### `midiGrid.midiStream (Duplex Stream)`
 
 This midi stream is connected to the constructor `duplexPort` if specified, otherwise it can be manually piped to and from a midi device.

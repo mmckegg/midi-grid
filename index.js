@@ -25,6 +25,14 @@ module.exports = function MidiGrid(midiStream, mapping, outputGrid){
     }
   })
 
+  self.resend = function(){
+    Object.keys(currentOutputValues).forEach(function(k){
+      var message = k.split('/').map(pint)
+      message.push(currentOutputValues[k])
+      self.midiStream.queue(message)
+    })
+  }
+
   if (midiStream){ // duplex midi!
     midiStream.pipe(self.midiStream).pipe(midiStream)
   }
