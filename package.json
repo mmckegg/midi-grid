@@ -1,6 +1,6 @@
 {
   "name": "midi-grid",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Two way mapping of a midi stream to coordinate grid with stackable states.",
   "main": "index.js",
   "scripts": {
