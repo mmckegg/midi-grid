@@ -1,7 +1,9 @@
 midi-grid
 ===
 
-Two way mapping of a midi stream to coordinate grid with stackable states.
+Map a duplex midi stream to [observable](https://github.com/raynos/observ) input and output value [grids](https://github.com/mmckegg/.
+
+For modelling grid midi controllers such as the Launchpad.
 
 ## Install via [npm](https://npmjs.org/package/midi-grid)
 
@@ -15,13 +17,16 @@ $ npm install midi-grid
 var MidiGrid = require('midi-grid')
 ```
 
-### var midiGrid = MidiGrid(mapping, midi)
+### var midiGrid = MidiGrid(duplexMidiStream, mapping[, outputGrid])
 
 Create an [observable](https://github.com/mmckegg/observ-grid) instance of MidiGrid. 
 
+Pass in a `duplexMidiStream` such as [web-midi](https://github.com/mmckegg/web-midi) or [midi-stream](https://github.com/mmckegg/midi-stream).
+
 `mapping` is an [array-grid](https://github.com/mmckegg/array-grid) containing the midi to map (e.g. `"144/36"`).
 
-`midi` is a duplex midi stream such as [web-midi](https://github.com/mmckegg/web-midi) or [midi-stream](https://github.com/mmckegg/midi-stream).
+Optionally pass in `outputGrid` - an observable grid for setting output values as [observ-grid](https://github.com/mmckegg/observ-grid) or [observ-grid-stack](https://github.com/mmckegg/observ-grid-stack) for layering grids.
+
 
 ```js
 // observe Novation Launchpad button grid
@@ -36,8 +41,7 @@ for (var r=0;r<8;r++){
   }
 }
 
-var launchpad = MidiGrid(mapping, duplexPort)
-var lightReleases = {}
+var launchpad = MidiGrid(duplexPort, mapping)
 
 launchpad(function(grid){
   // grid is an immutable instance of ArrayGrid with coords mapped to current values
@@ -49,41 +53,35 @@ launchpad(function(grid){
       triggerOn(coords, value)
 
       // turn on light
-      lightReleases[key] = launchpad.pushState(coords[0], coords[1], 127)
+      launchpad.set(coords[0], coords[1], 127)
     } else {
       triggerOff(coords)
 
       // turn off light
-      lightReleases[key]()
+      launchpad.set(coords[0], coords[1], 0)
     }
   }
 })
 ```
 
-### var release = midiGrid.pushBase(row, col, value)
+### `midiGrid.get(row, col)`
 
-Add a base output value to the stack. `release()` reverts to value below in stack.
+Get the current input value of the given coordinates.
 
-`pushBase` and `pushState` work the same way except that `pushState` take priority of the other.
+### `midiGrid.set(row, col, value)`
 
-### var release = midiGrid.pushState(row, col, value)
-
-Add an output value to the stack. `release()` reverts to value below in stack or falls back to base stack if none.
-
-`pushBase` and `pushState` work the same way except that `pushState` take priority of the other.
-
-### midiGrid.flash(row, col, value, ms)
-
-Add `value` to the stack for the `ms` duration specfied.
+Alias for `output.set(row, col, value)`. Sets the output value at the given coordinates.
 
 ### midiGrid.midiStream (Duplex Stream)
 
 This midi stream is connected to the constructor `duplexPort` if specified, otherwise it can be manually piped to and from a midi device.
 
-## Observable Attributes
+## [Observable Attributes](https://github.com/raynos/observ)
 
 ### midiGrid
 
-### midiGrid.base
+Notifies when any input value changes (e.g. a button is pressed/released). 
 
-### midiGrid.state
+### midiGrid.output ([ObservGrid](https://github.com/mmckegg/observ-grid) or custom observ passed to ctor)
+
+Notifies when any output value changes (e.g. light up button). Set output values using `midiGrid.output.set(row, col, val)` or use the alias `midiGrid.set`.
