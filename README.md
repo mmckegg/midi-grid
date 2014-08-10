@@ -1,7 +1,7 @@
 midi-grid
 ===
 
-Map a duplex midi stream to [observable](https://github.com/raynos/observ) input and output value [grids](https://github.com/mmckegg/.
+Map a duplex midi stream to [observable](https://github.com/raynos/observ) input and output value [grids](https://github.com/mmckegg/observ-grid).
 
 For modelling grid midi controllers such as the Launchpad.
 
