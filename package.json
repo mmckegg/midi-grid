@@ -1,6 +1,6 @@
 {
   "name": "midi-grid",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Map a duplex midi stream to observable input and output value grids.",
   "main": "index.js",
   "scripts": {
